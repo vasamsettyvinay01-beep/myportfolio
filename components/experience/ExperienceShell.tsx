@@ -15,9 +15,11 @@ function ScrollProgress() {
 
   return (
     <motion.div
-      className="fixed top-0 right-0 left-0 z-[60] h-px origin-left bg-accent/30"
+      className="fixed top-0 right-0 left-0 z-[60] h-[2px] origin-left"
       style={{ scaleX }}
-    />
+    >
+      <div className="h-full w-full bg-gradient-to-r from-accent via-accent-violet to-accent" />
+    </motion.div>
   );
 }
 
@@ -25,7 +27,7 @@ export function ExperienceShell() {
   return (
     <div className="experience-root bg-noise relative min-h-screen">
       <div className="ambient-top pointer-events-none fixed inset-0 z-0" />
-      <div className="bg-grid pointer-events-none fixed inset-0 z-0 opacity-60" />
+      <div className="bg-grid pointer-events-none fixed inset-0 z-0 opacity-70" />
       <ScrollProgress />
       <CommandNav />
 

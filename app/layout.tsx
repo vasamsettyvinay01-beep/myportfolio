@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { JetBrains_Mono } from "next/font/google";
+import { CursorRoot } from "@/components/experience/CursorRoot";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -27,7 +28,26 @@ export const metadata: Metadata = {
     "Founding Engineer",
     "Operational AI",
     "Systems Builder",
+    "Vinay Vasamsetty",
+    "Agentrix",
+    "Houston",
   ],
+  authors: [{ name: "Vinay Vasamsetty" }],
+  openGraph: {
+    title: "Vinay Vasamsetty — AI Operational Systems",
+    description:
+      "AI-powered operational systems, agentic platforms, and production SaaS — built to ship.",
+    type: "website",
+    locale: "en_US",
+    siteName: "vinay.systems",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Vinay Vasamsetty — AI Operational Systems",
+    description:
+      "AI-powered operational systems, agentic platforms, and production SaaS — built to ship.",
+  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
@@ -41,7 +61,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${jetbrains.variable} scroll-smooth`}
     >
       <body className="min-h-screen overflow-x-hidden bg-bg font-sans text-text-primary antialiased">
-        {children}
+        <CursorRoot>{children}</CursorRoot>
       </body>
     </html>
   );

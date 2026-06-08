@@ -14,18 +14,22 @@ export function ContactPortal() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="rounded-2xl matte-panel px-8 py-16 text-center sm:px-14 sm:py-20"
+          className="relative overflow-hidden rounded-2xl matte-panel-glow px-8 py-16 text-center sm:px-14 sm:py-20"
         >
-          <p className="font-mono text-[11px] tracking-[0.2em] text-text-secondary uppercase">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(110,139,255,0.06)_0%,transparent_65%)]" />
+          <div className="beast-shimmer pointer-events-none absolute inset-0 opacity-30" />
+
+          <p className="relative font-mono text-[11px] uppercase tracking-[0.2em] text-text-secondary">
             Contact
           </p>
-          <h2 className="mt-8 text-3xl font-medium tracking-[-0.02em] sm:text-4xl">
+          <h2 className="relative mt-8 text-3xl font-medium tracking-[-0.02em] sm:text-4xl">
             Building something ambitious?
           </h2>
-          <p className="mx-auto mt-6 max-w-md text-base text-text-secondary">
+          <p className="relative mx-auto mt-6 max-w-md text-base text-text-secondary">
             Let&apos;s build systems that actually ship.
           </p>
-          <div className="mt-10 flex flex-wrap justify-center gap-3">
+
+          <div className="relative mt-10 flex flex-wrap justify-center gap-3">
             {[
               { href: CONTACT_LINKS.email, icon: Mail, label: "Email" },
               { href: CONTACT_LINKS.phone, icon: Phone, label: "Phone" },
@@ -36,18 +40,21 @@ export function ContactPortal() {
               <a
                 key={label}
                 href={href}
+                data-magnetic
                 target={href.startsWith("mailto") || href.startsWith("tel") ? undefined : "_blank"}
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-md border border-border px-5 py-2.5 text-sm text-text-primary transition-colors hover:bg-surface-elevated"
+                className="magnetic-target inline-flex items-center gap-2 rounded-md border border-border px-5 py-2.5 text-sm text-text-primary transition-colors hover:border-accent/30 hover:bg-surface-elevated"
               >
                 <Icon size={15} strokeWidth={1.5} />
                 {label}
               </a>
             ))}
           </div>
+
           <a
             href={CONTACT_LINKS.schedule}
-            className="mt-8 inline-flex items-center gap-2 text-sm text-text-secondary transition-colors hover:text-text-primary"
+            data-magnetic
+            className="magnetic-target relative mt-8 inline-flex items-center gap-2 text-sm text-text-secondary transition-colors hover:text-accent"
           >
             Book a consultation
             <ArrowRight size={14} strokeWidth={1.5} />
@@ -59,7 +66,7 @@ export function ContactPortal() {
             Vinay Vasamsetty
           </p>
           <p className="font-mono text-[11px] text-text-secondary/50">
-            Operational systems
+            Operational systems · Houston, TX
           </p>
         </footer>
       </div>
