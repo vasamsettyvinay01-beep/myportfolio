@@ -26,6 +26,7 @@ export function IntelPanel() {
           {CASE_STUDIES.map((study, i) => (
             <motion.article
               key={study.id}
+              id={`intel-${study.id}`}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

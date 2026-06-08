@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useScroll, useSpring } from "framer-motion";
+import { ArchitectureExperience } from "./ArchitectureExperience";
 import { BuildLogTerminal } from "./BuildLogTerminal";
 import { AILabExperience } from "./AILabExperience";
 import { CommandNav } from "./CommandNav";
@@ -34,6 +35,7 @@ export function ExperienceShell() {
       <main className="relative z-10">
         <HeroCommand />
         <SystemsUniverse />
+        <ArchitectureExperience />
         <BuildLogTerminal />
         <AILabExperience />
         <IntelPanel />

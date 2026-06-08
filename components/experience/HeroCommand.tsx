@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Calendar, Code2 } from "lucide-react";
+import { ArrowRight, Calendar, Code2, Users } from "lucide-react";
 import { CONTACT_LINKS } from "@/lib/data";
 import { AISystemCore } from "./AISystemCore";
 
@@ -70,6 +70,16 @@ export function HeroCommand() {
             >
               <Code2 size={15} strokeWidth={1.5} />
               GitHub
+            </a>
+            <a
+              href={CONTACT_LINKS.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-magnetic
+              className="magnetic-target inline-flex items-center gap-2 rounded-md border border-border px-5 py-2.5 text-sm text-text-secondary transition-colors hover:border-accent/30 hover:text-text-primary hover:bg-surface-elevated"
+            >
+              <Users size={15} strokeWidth={1.5} />
+              LinkedIn
             </a>
             <a
               href={CONTACT_LINKS.schedule}

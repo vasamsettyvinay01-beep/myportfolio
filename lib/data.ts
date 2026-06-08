@@ -1,6 +1,7 @@
 export const NAV_LINKS = [
   { label: "Core", href: "#core" },
   { label: "Systems", href: "#systems" },
+  { label: "Architecture", href: "#architecture" },
   { label: "Terminal", href: "#terminal" },
   { label: "AI Lab", href: "#ai-lab" },
   { label: "Intel", href: "#intel" },
@@ -235,8 +236,8 @@ export const SYSTEMS: SystemCard[] = [
       { label: "Agents deployed", value: "12+" },
     ],
     links: {
-      caseStudy: "#intel",
-      architecture: "#systems",
+      caseStudy: "#intel-candidatematch",
+      architecture: "#architecture",
       demo: "#",
       github: "https://github.com/vasamsettyvinay01-beep/SNIPR",
     },
@@ -253,8 +254,8 @@ export const SYSTEMS: SystemCard[] = [
       { label: "Workflows", value: "200+" },
     ],
     links: {
-      caseStudy: "#intel",
-      architecture: "#systems",
+      caseStudy: "#intel-agentrix",
+      architecture: "#architecture",
       demo: "#",
       github: "https://github.com/vasamsettyvinay01-beep/agentrix-foundation",
     },
@@ -271,8 +272,8 @@ export const SYSTEMS: SystemCard[] = [
       { label: "Deploy freq", value: "Daily" },
     ],
     links: {
-      caseStudy: "#intel",
-      architecture: "#systems",
+      caseStudy: "#intel-orion",
+      architecture: "#architecture",
       demo: "#",
       github: "https://github.com/vasamsettyvinay01-beep/orion-path-website",
     },
@@ -289,8 +290,8 @@ export const SYSTEMS: SystemCard[] = [
       { label: "Processing time", value: "<30s" },
     ],
     links: {
-      caseStudy: "#intel",
-      architecture: "#systems",
+      caseStudy: "#intel-door",
+      architecture: "#architecture",
       demo: "#",
       github: "https://github.com/vasamsettyvinay01-beep",
     },
@@ -307,8 +308,7 @@ export const SYSTEMS: SystemCard[] = [
       { label: "API latency", value: "<120ms" },
     ],
     links: {
-      caseStudy: "#intel",
-      architecture: "#systems",
+      architecture: "#architecture",
       demo: "#",
       github: "https://github.com/vasamsettyvinay01-beep",
     },
@@ -325,8 +325,7 @@ export const SYSTEMS: SystemCard[] = [
       { label: "Time saved", value: "200h/mo" },
     ],
     links: {
-      caseStudy: "#intel",
-      architecture: "#systems",
+      architecture: "#architecture",
       demo: "#",
       github: "https://github.com/vasamsettyvinay01-beep",
     },
@@ -521,12 +520,25 @@ export const CASE_STUDIES: CaseStudy[] = [
       "50+ concurrent agents, 200+ workflows in production, 99.9% uptime across orchestration layer.",
   },
   {
-    id: "ats-pipeline",
-    name: "ATS Resume Intelligence Pipeline",
+    id: "orion",
+    name: "Orion OS",
     problem:
-      "Resume parsing and intelligence extraction was slow, inconsistent, and couldn't scale with high-volume applicant traffic.",
+      "Business operations ran across disconnected tools — CRM, billing, alerts, and reporting required manual handoffs and constant context switching.",
     solution:
-      "Engineered a document intelligence pipeline with OCR preprocessing, structured extraction, AI scoring, and async batch processing with monitoring hooks.",
+      "Built AI-powered business operations infrastructure with unified webhooks, scheduled jobs, Supabase-backed state, and FastAPI services for cross-system automation.",
+    stack: ["React", "FastAPI", "Supabase", "Webhooks", "Cron", "PostgreSQL"],
+    tradeoff:
+      "Favored composable integrations over a monolithic ERP — faster to ship per-client workflows at the cost of more integration surface area.",
+    outcome:
+      "80% of recurring ops automated, 25+ integrations live, daily deploy cadence across the operations stack.",
+  },
+  {
+    id: "door",
+    name: "Door Intelligence Platform",
+    problem:
+      "Construction document extraction was slow, inconsistent, and couldn't scale with high-volume PDF and blueprint uploads.",
+    solution:
+      "Engineered a document intelligence pipeline with OCR preprocessing, LLM structured extraction, S3 storage, and async batch processing with monitoring hooks.",
     stack: ["Python", "FastAPI", "S3", "Claude", "PostgreSQL", "Celery"],
     tradeoff:
       "Batch async processing over real-time sync — optimized throughput and cost at the expense of sub-second individual response times.",
