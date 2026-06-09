@@ -68,9 +68,19 @@ html.cursor-beast *::after {
 
 .bg-grid {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
-  background-size: 64px 64px;
+    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+  background-size: 48px 48px;
+  animation: grid-drift 20s linear infinite;
+}
+
+@keyframes grid-drift {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 48px 48px;
+  }
 }
 
 .bg-noise::before {
@@ -230,6 +240,113 @@ html.cursor-beast *::after {
 .terminal-scroll::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 2px;
+}
+
+/* Full-page animated background overlays */
+.animated-bg-vignette {
+  background: radial-gradient(
+    ellipse 95% 90% at 50% 45%,
+    transparent 0%,
+    rgba(7, 7, 8, 0.15) 60%,
+    rgba(7, 7, 8, 0.55) 100%
+  );
+  pointer-events: none;
+}
+
+.section-bridge-line {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(110, 139, 255, 0.35) 50%,
+    transparent
+  );
+  animation: bridge-pulse 3s ease-in-out infinite;
+}
+
+@keyframes bridge-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animated-bg-corners::before,
+.animated-bg-corners::after {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.35;
+  animation: corner-float 10s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.animated-bg-corners::before {
+  top: 10%;
+  left: -5%;
+  background: rgba(110, 139, 255, 0.15);
+}
+
+.animated-bg-corners::after {
+  bottom: 15%;
+  right: -5%;
+  background: rgba(155, 123, 255, 0.12);
+  animation-delay: -5s;
+}
+
+@keyframes corner-float {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(20px, -15px) scale(1.08);
+  }
+}
+
+.animated-bg-scan {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(110, 139, 255, 0.012) 3px,
+    rgba(110, 139, 255, 0.012) 4px
+  );
+  animation: scan-drift 12s linear infinite;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.animated-bg-fallback {
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 30%, rgba(110, 139, 255, 0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 45% at 80% 70%, rgba(155, 123, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 35% at 50% 50%, rgba(110, 139, 255, 0.06) 0%, transparent 60%);
+  animation: bg-pulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes scan-drift {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(8px);
+  }
+}
+
+@keyframes bg-pulse {
+  0% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

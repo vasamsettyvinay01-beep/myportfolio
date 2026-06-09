@@ -10,15 +10,13 @@ export function IntelPanel() {
   return (
     <WorldSection id="intel" className="border-t border-border">
       <div className="section-container">
-        <div className="mb-16 max-w-xl">
-          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-text-secondary">
+        <div className="mb-10 max-w-xl">
+          <h2 className="text-3xl font-medium tracking-[-0.02em] text-text-primary sm:text-4xl">
             Case studies
-          </p>
-          <h2 className="mt-6 text-3xl font-medium tracking-[-0.02em] text-text-primary sm:text-4xl">
-            Selected intelligence
           </h2>
-          <p className="mt-6 text-base leading-relaxed text-text-secondary">
-            Problem, solution, tradeoff, outcome — how systems ship.
+          <p className="mt-4 text-base leading-relaxed text-text-secondary">
+            Problem, solution, tradeoff, and outcome for four production systems
+            — CandidateMatch, Agentrix, Orion OS, and Door Intelligence.
           </p>
         </div>
 

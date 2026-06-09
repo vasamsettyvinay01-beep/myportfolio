@@ -31,7 +31,7 @@ export function SoftOperationalMap({ active, onActiveChange }: SoftOperationalMa
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(110,139,255,0.06)_0%,transparent_55%)]" />
         <div className="beast-shimmer absolute inset-0 opacity-40" />
 
-        <svg viewBox="0 0 100 100" className="relative z-10 h-full w-full" aria-label="Operational systems map">
+        <svg viewBox="0 0 100 100" className="relative z-10 h-full w-full" aria-label="Production stack map">
           <defs>
             <filter id="node-glow">
               <feGaussianBlur stdDeviation="0.8" result="blur" />

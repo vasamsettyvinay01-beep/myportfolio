@@ -1,4 +1,4 @@
-import { CONTACT_LINKS } from "@/lib/data";
+import { CONTACT_LINKS, SITE } from "@/lib/data";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
@@ -10,9 +10,8 @@ export function JsonLd() {
         "@type": "Person",
         "@id": `${siteUrl}/#person`,
         name: "Vinay Vasamsetty",
-        jobTitle: "AI Product Engineer",
-        description:
-          "Technical founder building AI-powered operational systems, agentic platforms, and production SaaS.",
+        jobTitle: SITE.role,
+        description: SITE.subhead,
         url: siteUrl,
         email: "vasamsettyvinay.01@gmail.com",
         sameAs: [
@@ -32,7 +31,7 @@ export function JsonLd() {
         "@id": `${siteUrl}/#website`,
         url: siteUrl,
         name: "vinay.systems",
-        description: "AI Operational Systems portfolio",
+        description: `${SITE.name} — ${SITE.headline}`,
         author: { "@id": `${siteUrl}/#person` },
       },
     ],

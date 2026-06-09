@@ -2,17 +2,19 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, Calendar, Code2, Users } from "lucide-react";
-import { CONTACT_LINKS } from "@/lib/data";
+import { CONTACT_LINKS, SHIPPING_LOG, SITE } from "@/lib/data";
 import { AISystemCore } from "./AISystemCore";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-const headline = "I build AI-powered operational systems that ship.".split(" ");
+const headline = SITE.headline.split(" ");
 
 export function HeroCommand() {
+  const lastShip = SHIPPING_LOG[0];
+
   return (
-    <section className="ambient-hero relative min-h-screen">
-      <div className="section-container relative z-20 pt-28 pb-2 sm:pt-32">
+    <section className="ambient-hero relative">
+      <div className="section-container relative z-20 pt-24 pb-4 sm:pt-28">
         <div className="max-w-3xl">
           <motion.p
             initial={{ opacity: 0, y: 10 }}
@@ -20,7 +22,7 @@ export function HeroCommand() {
             transition={{ duration: 0.6, ease: EASE }}
             className="font-mono text-[11px] uppercase tracking-[0.22em] text-text-secondary"
           >
-            AI Product Engineer · Founding Engineer · Systems Builder
+            {SITE.role} · {SITE.location}
           </motion.p>
 
           <h1 className="mt-8 text-4xl font-medium leading-[1.06] tracking-[-0.02em] text-text-primary sm:text-5xl lg:text-[3.25rem]">
@@ -43,8 +45,16 @@ export function HeroCommand() {
             transition={{ duration: 0.65, delay: 0.55, ease: EASE }}
             className="mt-8 max-w-xl text-base leading-relaxed text-text-secondary"
           >
-            Technical founder building automation infrastructure, AI workflows,
-            SaaS platforms, and production-grade operational tooling.
+            {SITE.subhead}
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.65 }}
+            className="mt-4 font-mono text-[11px] text-text-secondary/80"
+          >
+            {SITE.companies}
           </motion.p>
 
           <motion.div
@@ -58,7 +68,7 @@ export function HeroCommand() {
               data-magnetic
               className="magnetic-target glow-blue inline-flex items-center gap-2 rounded-md bg-text-primary px-5 py-2.5 text-sm font-medium text-bg transition-opacity hover:opacity-90"
             >
-              View systems
+              View products
               <ArrowRight size={15} strokeWidth={1.5} />
             </a>
             <a
@@ -93,22 +103,14 @@ export function HeroCommand() {
             </a>
           </motion.div>
 
-          <motion.div
+          <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.9 }}
-            className="mt-12 flex flex-wrap gap-6 font-mono text-[11px] text-text-secondary"
+            className="mt-12 font-mono text-[11px] text-text-secondary"
           >
-            <span className="flex items-center gap-2">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-green opacity-40" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent-green" />
-              </span>
-              Systems operational
-            </span>
-            <span>7 deployed modules</span>
-            <span>Last ship 06/08/26</span>
-          </motion.div>
+            Last ship {lastShip.date} — {lastShip.message}
+          </motion.p>
         </div>
       </div>
 

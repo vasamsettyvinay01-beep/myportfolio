@@ -8,9 +8,15 @@ type WorldSectionProps = {
   id: string;
   children: ReactNode;
   className?: string;
+  tight?: boolean;
 };
 
-export function WorldSection({ id, children, className = "" }: WorldSectionProps) {
+export function WorldSection({
+  id,
+  children,
+  className = "",
+  tight = false,
+}: WorldSectionProps) {
   const ref = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({
@@ -18,12 +24,14 @@ export function WorldSection({ id, children, className = "" }: WorldSectionProps
     offset: ["start end", "end start"],
   });
 
-  const opacity = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0.5, 1, 1, 0.6]);
-  const y = useTransform(scrollYProgress, [0, 0.5, 1], [24, 0, -16]);
+  const opacity = useTransform(scrollYProgress, [0, 0.12, 0.88, 1], [0.92, 1, 1, 0.92]);
+  const y = useTransform(scrollYProgress, [0, 0.5, 1], [10, 0, -8]);
+
+  const padding = tight ? "py-12 sm:py-16" : "py-16 sm:py-20";
 
   if (reducedMotion) {
     return (
-      <section id={id} ref={ref} className={`relative py-28 sm:py-36 ${className}`}>
+      <section id={id} ref={ref} className={`relative ${padding} ${className}`}>
         {children}
       </section>
     );
@@ -34,7 +42,7 @@ export function WorldSection({ id, children, className = "" }: WorldSectionProps
       id={id}
       ref={ref}
       style={{ opacity, y }}
-      className={`relative py-28 sm:py-36 ${className}`}
+      className={`relative ${padding} ${className}`}
     >
       {children}
     </motion.section>

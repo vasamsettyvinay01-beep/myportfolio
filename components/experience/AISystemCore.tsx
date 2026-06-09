@@ -22,16 +22,16 @@ export function AISystemCore() {
   const reducedMotion = useReducedMotion();
 
   return (
-    <div id="core" className="relative flex min-h-[70vh] flex-col justify-center pb-16 pt-8">
+    <div id="core" className="relative pb-10 pt-2">
       <div className="section-container">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-10">
           <div>
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               className="font-mono text-[11px] uppercase tracking-[0.2em] text-text-secondary"
             >
-              Operational map
+              Production stack
             </motion.p>
             <motion.p
               initial={{ opacity: 0 }}
@@ -39,15 +39,15 @@ export function AISystemCore() {
               transition={{ delay: 0.08 }}
               className="mt-6 max-w-md text-sm leading-relaxed text-text-secondary"
             >
-              A live view of orchestration routes, agent coordination, and
-              infrastructure — quiet, always running.
+              Ten layers I use across every shipped system — hover or tap a node
+              to see where it shows up in CandidateMatch, Agentrix, and Orion OS.
             </motion.p>
 
-            <div className="mt-10 hidden max-w-sm sm:block">
+            <div className="mt-8 max-w-sm">
               <LiveOpsFeed />
             </div>
 
-            <div className="mt-10 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-2">
+            <div className="mt-8 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-2">
               {CORE_NODES.slice(0, 6).map((node, i) => (
                 <motion.button
                   key={node.id}

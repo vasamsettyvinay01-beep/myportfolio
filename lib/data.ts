@@ -1,10 +1,10 @@
 export const NAV_LINKS = [
-  { label: "Core", href: "#core" },
-  { label: "Systems", href: "#systems" },
+  { label: "Stack", href: "#core" },
+  { label: "Products", href: "#systems" },
   { label: "Architecture", href: "#architecture" },
-  { label: "Terminal", href: "#terminal" },
-  { label: "AI Lab", href: "#ai-lab" },
-  { label: "Intel", href: "#intel" },
+  { label: "Ship log", href: "#terminal" },
+  { label: "Research", href: "#ai-lab" },
+  { label: "Case studies", href: "#intel" },
   { label: "Contact", href: "#contact" },
 ] as const;
 
@@ -17,120 +17,139 @@ export type CoreNode = {
   color: string;
 };
 
+/** Production stack layers — each node maps to systems Vinay actually builds */
 export const CORE_NODES: CoreNode[] = [
   {
     id: "agents",
     label: "AI Agents",
-    metric: "12 active",
-    activity: "Routing tool calls",
-    detail: "Multi-agent coordination with Claude tool-calling and memory-aware context windows.",
+    metric: "Claude tool-calling",
+    activity: "CandidateMatch · Agentrix",
+    detail: "Multi-agent workflows with structured tool use, memory, and human review gates.",
     color: "#6E8BFF",
   },
   {
     id: "orchestrator",
     label: "Orchestrator",
-    metric: "847 req/min",
-    activity: "Optimizing routes",
-    detail: "Central workflow runtime managing queues, retries, and dead-letter recovery.",
+    metric: "BullMQ + Redis",
+    activity: "Queue routing",
+    detail: "Async job orchestration with retries, dead-letter queues, and workflow observability.",
     color: "#B8C0CC",
   },
   {
     id: "vector",
     label: "Vector Memory",
-    metric: "2.4M vectors",
-    activity: "Syncing embeddings",
-    detail: "Hybrid retrieval with reranking for agent context and RAG pipelines.",
+    metric: "pgvector + RAG",
+    activity: "Hybrid retrieval",
+    detail: "Embeddings, reranking, and citation-backed context for recruiting and document AI.",
     color: "#74D3AE",
   },
   {
     id: "api",
     label: "API Layer",
-    metric: "99.9% uptime",
-    activity: "Processing webhooks",
-    detail: "REST + event streams powering all operational interfaces.",
+    metric: "FastAPI · Next.js",
+    activity: "Webhooks + REST",
+    detail: "Production APIs and event streams for ATS integrations, billing, and ops tooling.",
     color: "#6E8BFF",
   },
   {
     id: "automation",
-    label: "Automation Engine",
-    metric: "200+ flows",
-    activity: "Executing triggers",
-    detail: "Cron, workers, and event-driven automation across all systems.",
+    label: "Automation",
+    metric: "Workers + cron",
+    activity: "Orion OS · pipelines",
+    detail: "Scheduled jobs and event triggers that replace manual ops across client systems.",
     color: "#B8C0CC",
   },
   {
     id: "runtime",
     label: "Workflow Runtime",
-    metric: "0 deadlocks",
-    activity: "Queue healthy",
-    detail: "Async orchestration with BullMQ and observability hooks.",
+    metric: "TypeScript · Python",
+    activity: "Agentrix core",
+    detail: "The execution layer where agent graphs, tool registries, and monitors connect.",
     color: "#6E8BFF",
   },
   {
     id: "cloud",
-    label: "Cloud Infrastructure",
-    metric: "3 regions",
-    activity: "Edge deploy active",
-    detail: "ECS, serverless workers, and CDN edge for global ops.",
+    label: "Cloud",
+    metric: "AWS · ECS",
+    activity: "Amplify · S3",
+    detail: "Deployed infrastructure for APIs, document storage, and this portfolio.",
     color: "#74D3AE",
   },
   {
     id: "pipelines",
     label: "Data Pipelines",
-    metric: "10K jobs/hr",
-    activity: "Batch processing",
-    detail: "ETL, document intelligence, and scoring pipeline orchestration.",
+    metric: "Celery · batch jobs",
+    activity: "Door Intel · ATS",
+    detail: "OCR, extraction, and scoring pipelines for documents and applicant volume.",
     color: "#B8C0CC",
   },
   {
     id: "ui",
-    label: "User Interfaces",
-    metric: "6 surfaces",
-    activity: "Live dashboards",
-    detail: "Ops consoles, SaaS dashboards, and Chrome extension interfaces.",
+    label: "Interfaces",
+    metric: "React · Chrome MV3",
+    activity: "Dashboards · extensions",
+    detail: "Ops consoles, SaaS surfaces, and browser automation users interact with daily.",
     color: "#6E8BFF",
   },
   {
     id: "monitoring",
     label: "Monitoring",
-    metric: "All green",
-    activity: "Tracing active",
-    detail: "Logs, metrics, alerts, and eval regression checks.",
+    metric: "Logs · alerts",
+    activity: "Eval regression",
+    detail: "Pipeline health checks and model drift detection on production scoring workflows.",
     color: "#74D3AE",
   },
 ];
 
-export const LIVE_OPS_FEED = [
-  { tag: "AI_AGENT", message: "Workflow completed — resume scoring batch", status: "ok" },
-  { tag: "ORCHESTRATOR", message: "Route optimized — latency -18ms", status: "ok" },
-  { tag: "VECTOR_DB", message: "Memory synced — 2,412 embeddings indexed", status: "ok" },
-  { tag: "PIPELINE", message: "10,247 jobs processed in queue batch-7f2", status: "ok" },
-  { tag: "INFRA", message: "Edge deployment updated — us-east-1", status: "ok" },
-  { tag: "EVAL_ENGINE", message: "Regression checks passed — 0 drift", status: "ok" },
-  { tag: "QUEUE", message: "Async orchestration — 0 deadlocks detected", status: "ok" },
-  { tag: "DEPLOY", message: "Agentrix routing layer v2.1 live", status: "ok" },
-  { tag: "AI_AGENT", message: "Document extraction complete — Door Intel", status: "ok" },
-  { tag: "MONITOR", message: "Alert threshold nominal across all systems", status: "ok" },
-  { tag: "MEMORY", message: "Cross-session context restored for agent-04", status: "ok" },
-  { tag: "WORKFLOW", message: "Chrome autofill pipeline — 847 forms processed", status: "ok" },
-] as const;
-
-export const TERMINAL_LOG = [
-  { time: "14:32:01", tag: "DEPLOY", message: "CandidateMatch v2.4 deployed to production", level: "info" },
-  { time: "14:31:48", tag: "QUEUE", message: "Async orchestration optimized — deadlock patch applied", level: "info" },
-  { time: "14:31:22", tag: "AI_AGENT", message: "Resume scoring completed — batch 7f2a (2,847 candidates)", level: "success" },
-  { time: "14:30:55", tag: "MEMORY", message: "Vector index rebuilt — 2.4M embeddings synced", level: "info" },
-  { time: "14:30:12", tag: "INFRA", message: "ECS cluster scaled — 4 → 8 workers (us-east-1)", level: "warn" },
-  { time: "14:29:44", tag: "EVAL_ENGINE", message: "Regression checks passed — scoring model v3.2", level: "success" },
-  { time: "14:29:01", tag: "ORCHESTRATOR", message: "Multi-agent routing layer active — Claude tool-calling", level: "info" },
-  { time: "14:28:33", tag: "PIPELINE", message: "ATS processing latency reduced 63% — p99: 420ms", level: "success" },
-  { time: "14:27:58", tag: "DEPLOY", message: "Agentrix orchestration v2.1 — zero-downtime rollout", level: "info" },
-  { time: "14:27:11", tag: "AI_TRACE", message: "Tool call chain: search → rank → route → notify", level: "info" },
-  { time: "14:26:40", tag: "WORKFLOW", message: "Chrome autofill — role-based form detection shipped", level: "success" },
-  { time: "14:25:55", tag: "MONITOR", message: "Pipeline monitoring added for AI scoring workflows", level: "info" },
-  { time: "14:25:02", tag: "INFRA", message: "Edge CDN cache invalidated — global propagation", level: "info" },
-  { time: "14:24:18", tag: "QUEUE", message: "Dead letter queue empty — all retries resolved", level: "success" },
-  { time: "14:23:44", tag: "AI_AGENT", message: "Document extraction — Door Intel batch complete", level: "info" },
+export const SHIPPING_LOG = [
+  {
+    date: "06/08/26",
+    tag: "DEPLOY",
+    message: "Portfolio deployed to AWS Amplify with animated operational UI.",
+    level: "success" as const,
+  },
+  {
+    date: "05/22/26",
+    tag: "FIX",
+    message: "Patched async orchestration deadlocks in Agentrix queue workers.",
+    level: "info" as const,
+  },
+  {
+    date: "05/20/26",
+    tag: "SHIP",
+    message: "Multi-agent routing layer shipped with Claude tool-calling.",
+    level: "success" as const,
+  },
+  {
+    date: "05/18/26",
+    tag: "PERF",
+    message: "CandidateMatch ATS processing latency reduced 63%.",
+    level: "success" as const,
+  },
+  {
+    date: "05/16/26",
+    tag: "SHIP",
+    message: "Chrome autofill extension — role-based form detection.",
+    level: "success" as const,
+  },
+  {
+    date: "05/14/26",
+    tag: "INFRA",
+    message: "Pipeline monitoring added for AI scoring workflows.",
+    level: "info" as const,
+  },
+  {
+    date: "05/12/26",
+    tag: "SHIP",
+    message: "Vector memory layer for cross-session agent context.",
+    level: "success" as const,
+  },
+  {
+    date: "05/10/26",
+    tag: "SHIP",
+    message: "Orion OS billing workflow dashboard launched.",
+    level: "success" as const,
+  },
 ] as const;
 
 export type ExplodedLayer = {
@@ -184,31 +203,6 @@ export const EXPLODED_LAYERS: Record<string, ExplodedLayer[]> = {
   ],
 };
 
-export const HERO_NODES = [
-  { id: "ai-agents", label: "AI Agents", x: 50, y: 18 },
-  { id: "workflow", label: "Workflow Engine", x: 78, y: 32 },
-  { id: "apis", label: "APIs", x: 88, y: 58 },
-  { id: "vector", label: "Vector Memory", x: 72, y: 78 },
-  { id: "cloud", label: "Cloud Infra", x: 42, y: 82 },
-  { id: "automation", label: "Automation", x: 18, y: 68 },
-  { id: "pipelines", label: "Data Pipelines", x: 12, y: 38 },
-  { id: "ui", label: "User Interfaces", x: 28, y: 22 },
-] as const;
-
-export const HERO_EDGES: [string, string][] = [
-  ["ai-agents", "workflow"],
-  ["workflow", "apis"],
-  ["apis", "vector"],
-  ["vector", "cloud"],
-  ["cloud", "automation"],
-  ["automation", "pipelines"],
-  ["pipelines", "ui"],
-  ["ui", "ai-agents"],
-  ["ai-agents", "apis"],
-  ["workflow", "vector"],
-  ["automation", "cloud"],
-];
-
 export type SystemCard = {
   id: string;
   name: string;
@@ -227,18 +221,17 @@ export type SystemCard = {
 export const SYSTEMS: SystemCard[] = [
   {
     id: "candidatematch",
-    name: "CandidateMatch",
-    description: "AI-powered recruiting intelligence platform.",
+    name: "CandidateMatch (SNIPR)",
+    description: "AI recruiting platform — scores, ranks, and routes candidates from ATS pipelines.",
     stack: ["Next.js", "Python", "Claude", "PostgreSQL", "RAG"],
     metrics: [
-      { label: "Match accuracy", value: "94%" },
-      { label: "Pipeline latency", value: "-63%" },
-      { label: "Agents deployed", value: "12+" },
+      { label: "Core capability", value: "Multi-agent scoring" },
+      { label: "Integration", value: "ATS webhooks" },
+      { label: "Retrieval", value: "pgvector RAG" },
     ],
     links: {
       caseStudy: "#intel-candidatematch",
       architecture: "#architecture",
-      demo: "#",
       github: "https://github.com/vasamsettyvinay01-beep/SNIPR",
     },
     previewNodes: ["Ingest", "Score", "Rank", "Route"],
@@ -246,17 +239,16 @@ export const SYSTEMS: SystemCard[] = [
   {
     id: "agentrix",
     name: "Agentrix",
-    description: "Operational AI orchestration system.",
+    description: "AI operations platform — workflow studio, onboarding, and multi-agent orchestration.",
     stack: ["TypeScript", "Node.js", "Redis", "Tool-calling", "Queues"],
     metrics: [
-      { label: "Concurrent agents", value: "50+" },
-      { label: "Uptime", value: "99.9%" },
-      { label: "Workflows", value: "200+" },
+      { label: "Runtime", value: "Multi-agent router" },
+      { label: "Queues", value: "BullMQ + Redis" },
+      { label: "Tools", value: "Claude API" },
     ],
     links: {
       caseStudy: "#intel-agentrix",
       architecture: "#architecture",
-      demo: "#",
       github: "https://github.com/vasamsettyvinay01-beep/agentrix-foundation",
     },
     previewNodes: ["Router", "Tools", "Memory", "Monitor"],
@@ -264,35 +256,33 @@ export const SYSTEMS: SystemCard[] = [
   {
     id: "orion",
     name: "Orion OS",
-    description: "AI-powered business operations infrastructure.",
+    description: "Business ops infrastructure — CRM sync, billing, webhooks, and scheduled automation.",
     stack: ["React", "FastAPI", "Supabase", "Webhooks", "Cron"],
     metrics: [
-      { label: "Ops automated", value: "80%" },
-      { label: "Integrations", value: "25+" },
-      { label: "Deploy freq", value: "Daily" },
+      { label: "Billing", value: "Stripe automation" },
+      { label: "Integrations", value: "Webhook hub" },
+      { label: "Backend", value: "FastAPI + Supabase" },
     ],
     links: {
       caseStudy: "#intel-orion",
       architecture: "#architecture",
-      demo: "#",
       github: "https://github.com/vasamsettyvinay01-beep/orion-path-website",
     },
     previewNodes: ["CRM", "Billing", "Alerts", "Reports"],
   },
   {
     id: "door",
-    name: "Door Intelligence Platform",
-    description: "Construction document AI extraction system.",
-    stack: ["Python", "OCR", "LLM", "S3", "PDF pipelines"],
+    name: "Door Intelligence",
+    description: "Construction document AI — OCR, LLM extraction, and batch export from PDF uploads.",
+    stack: ["Python", "OCR", "LLM", "S3", "Celery"],
     metrics: [
-      { label: "Extraction accuracy", value: "97%" },
-      { label: "Docs processed", value: "10K+" },
-      { label: "Processing time", value: "<30s" },
+      { label: "Input", value: "PDF / blueprint" },
+      { label: "Processing", value: "Async batches" },
+      { label: "Output", value: "Structured JSON" },
     ],
     links: {
       caseStudy: "#intel-door",
       architecture: "#architecture",
-      demo: "#",
       github: "https://github.com/vasamsettyvinay01-beep",
     },
     previewNodes: ["Upload", "Parse", "Extract", "Export"],
@@ -300,33 +290,31 @@ export const SYSTEMS: SystemCard[] = [
   {
     id: "billb",
     name: "BillB POS",
-    description: "Operational SaaS platform for business billing and workflows.",
+    description: "SaaS billing and POS workflows for merchants — Stripe, invoices, and ledger.",
     stack: ["Next.js", "Stripe", "Prisma", "PostgreSQL", "REST"],
     metrics: [
-      { label: "Transactions", value: "$2M+" },
-      { label: "Active merchants", value: "150+" },
-      { label: "API latency", value: "<120ms" },
+      { label: "Payments", value: "Stripe Connect" },
+      { label: "Data", value: "Prisma ledger" },
+      { label: "Surface", value: "Merchant POS" },
     ],
     links: {
       architecture: "#architecture",
-      demo: "#",
       github: "https://github.com/vasamsettyvinay01-beep",
     },
     previewNodes: ["POS", "Invoices", "Payments", "Ledger"],
   },
   {
     id: "chrome",
-    name: "Chrome Automation Suite",
-    description: "Job tracker and autofill automation extensions.",
+    name: "Chrome Automation",
+    description: "Browser extensions for job application tracking and intelligent form autofill.",
     stack: ["Chrome MV3", "TypeScript", "Content scripts", "Storage API"],
     metrics: [
-      { label: "Users", value: "5K+" },
-      { label: "Forms autofilled", value: "50K+" },
-      { label: "Time saved", value: "200h/mo" },
+      { label: "Autofill", value: "Role detection" },
+      { label: "Tracking", value: "Application state" },
+      { label: "Platform", value: "Manifest V3" },
     ],
     links: {
       architecture: "#architecture",
-      demo: "#",
       github: "https://github.com/vasamsettyvinay01-beep",
     },
     previewNodes: ["Detect", "Fill", "Track", "Sync"],
@@ -337,148 +325,89 @@ export const ARCHITECTURE_FLOW = [
   {
     id: "input",
     label: "Input",
-    description: "Events, documents, user actions, webhooks",
-    color: "#4F8CFF",
+    description: "Every system starts with real signals: ATS webhooks, PDF uploads, user actions, and third-party events.",
+    color: "#6e8bff",
   },
   {
     id: "orchestration",
     label: "AI Orchestration",
-    description: "Agents, tool-calling, routing, memory",
-    color: "#7B61FF",
+    description: "Agents decide what to do — tool-calling, routing, memory retrieval, and human review when needed.",
+    color: "#9b7bff",
   },
   {
     id: "backend",
     label: "Backend APIs",
-    description: "REST, GraphQL, queues, webhooks",
-    color: "#4F8CFF",
+    description: "FastAPI and Node services expose REST endpoints, webhooks, and queue producers consumers depend on.",
+    color: "#6e8bff",
   },
   {
     id: "data",
     label: "Data Layer",
-    description: "PostgreSQL, vectors, object storage",
-    color: "#2EE6A6",
+    description: "PostgreSQL for transactional state, pgvector for retrieval, S3 for documents.",
+    color: "#74d3ae",
   },
   {
     id: "automation",
-    label: "Automation Layer",
-    description: "Cron, workers, pipelines, triggers",
-    color: "#7B61FF",
+    label: "Automation",
+    description: "Celery workers, cron jobs, and event triggers replace manual ops and batch heavy work.",
+    color: "#9b7bff",
   },
   {
     id: "ui",
     label: "User Interface",
-    description: "Dashboards, ops consoles, extensions",
-    color: "#4F8CFF",
+    description: "Dashboards, ops consoles, and Chrome extensions — where operators and end users actually interact.",
+    color: "#6e8bff",
   },
   {
     id: "monitoring",
     label: "Monitoring",
-    description: "Logs, alerts, metrics, tracing",
-    color: "#2EE6A6",
+    description: "Logs, alerts, and eval regression checks so production AI doesn't silently drift.",
+    color: "#74d3ae",
   },
 ] as const;
 
-export const SHIPPING_LOG = [
-  {
-    date: "05/22/26",
-    message:
-      "Patched async orchestration issue causing agent queue deadlocks.",
-  },
-  {
-    date: "05/20/26",
-    message:
-      "Shipped multi-agent routing layer using Claude tool-calling.",
-  },
-  {
-    date: "05/18/26",
-    message: "Reduced ATS processing latency by 63%.",
-  },
-  {
-    date: "05/16/26",
-    message:
-      "Built Chrome autofill workflow with role-based form detection.",
-  },
-  {
-    date: "05/14/26",
-    message: "Added pipeline monitoring for AI scoring workflows.",
-  },
-  {
-    date: "05/12/26",
-    message: "Deployed vector memory layer for cross-session agent context.",
-  },
-  {
-    date: "05/10/26",
-    message: "Launched operational dashboard for Orion OS billing workflows.",
-  },
-] as const;
-
-export const AI_LAB_ITEMS = [
+export const RESEARCH_ITEMS = [
   {
     id: "voice",
     name: "Voice Agents",
     status: "active" as const,
-    description: "Real-time voice interfaces with tool execution",
-  },
-  {
-    id: "jarvis",
-    name: "Jarvis Assistants",
-    status: "active" as const,
-    description: "Context-aware personal ops assistants",
-  },
-  {
-    id: "workflow",
-    name: "Workflow Automations",
-    status: "active" as const,
-    description: "Multi-step agent chains with human-in-the-loop",
+    description: "Real-time voice interfaces wired to the same tool registry Agentrix uses.",
   },
   {
     id: "memory",
-    name: "Agent Memory Systems",
+    name: "Long-horizon Agent Memory",
     status: "building" as const,
-    description: "Long-horizon memory with vector retrieval",
+    description: "Cross-session context with vector retrieval — extending what CandidateMatch already does.",
   },
   {
-    id: "scoring",
-    name: "AI Scoring Engines",
+    id: "eval",
+    name: "Eval Frameworks",
     status: "active" as const,
-    description: "Candidate and document ranking pipelines",
+    description: "Automated regression and drift detection for production scoring models.",
+  },
+  {
+    id: "orchestration-proto",
+    name: "DAG Execution Engine",
+    status: "building" as const,
+    description: "Next iteration of Agentrix — graph-based multi-agent execution instead of linear queues.",
   },
   {
     id: "rag",
-    name: "RAG Pipelines",
+    name: "Hybrid RAG",
     status: "active" as const,
-    description: "Hybrid search with reranking and citations",
+    description: "Keyword + vector search with reranking — shipped in recruiting and document pipelines.",
   },
   {
     id: "browser",
     name: "Browser Automation",
     status: "active" as const,
-    description: "Chrome extensions with intelligent form detection",
-  },
-] as const;
-
-export const AI_LAB_EXTENDED = [
-  ...AI_LAB_ITEMS,
-  {
-    id: "eval",
-    name: "Eval Frameworks",
-    status: "active" as const,
-    description: "Automated regression + drift detection for scoring models",
-    classification: "RESTRICTED",
-  },
-  {
-    id: "orchestration-proto",
-    name: "Orchestration Prototypes",
-    status: "building" as const,
-    description: "Next-gen multi-agent DAG execution engine",
-    classification: "CLASSIFIED",
+    description: "Chrome MV3 extensions with intelligent form detection — shipped as Chrome Automation Suite.",
   },
   {
     id: "failed-rag",
     name: "Hybrid RAG v1",
     status: "archived" as const,
-    description: "Failed experiment — latency too high for real-time ops",
-    classification: "ARCHIVED",
+    description: "Archived — latency was too high for real-time ops. Informed the current pgvector approach.",
   },
 ] as const;
 
@@ -492,58 +421,65 @@ export type CaseStudy = {
   outcome: string;
 };
 
+export const CASE_STUDY_IDS = new Set([
+  "candidatematch",
+  "agentrix",
+  "orion",
+  "door",
+]);
+
 export const CASE_STUDIES: CaseStudy[] = [
   {
     id: "candidatematch",
     name: "CandidateMatch",
     problem:
-      "Recruiting teams drowned in resumes with no reliable way to score fit, rank candidates, or route to the right pipeline stage at scale.",
+      "Recruiting teams couldn't score, rank, or route candidates at scale — ATS pipelines were manual and slow.",
     solution:
-      "Built an AI recruiting intelligence platform with multi-agent scoring, RAG-backed candidate context, and automated pipeline routing integrated with existing ATS workflows.",
+      "Built SNIPR/CandidateMatch with multi-agent scoring, RAG-backed candidate context, and automated routing integrated into existing ATS workflows.",
     stack: ["Next.js", "Python", "Claude", "PostgreSQL", "pgvector", "Redis"],
     tradeoff:
-      "Chose accuracy-first scoring with human review gates over fully autonomous hiring decisions — trust and compliance over speed.",
+      "Accuracy-first scoring with human review gates instead of fully autonomous hiring — compliance and trust over raw speed.",
     outcome:
-      "63% reduction in ATS processing latency, 94% match accuracy on validated sets, and 12+ production agents handling daily recruiting volume.",
+      "63% reduction in ATS processing latency and multi-agent scoring in production on daily recruiting volume.",
   },
   {
     id: "agentrix",
     name: "Agentrix",
     problem:
-      "Operational AI workflows fragmented across scripts, cron jobs, and one-off integrations with no unified orchestration or observability.",
+      "AI workflows lived in scattered scripts and cron jobs with no unified orchestration or visibility.",
     solution:
-      "Designed an operational AI orchestration system with multi-agent routing, Claude tool-calling, queue-based execution, and real-time monitoring dashboards.",
-    stack: ["TypeScript", "Node.js", "Redis", "BullMQ", "Claude API", "Grafana"],
+      "Built Agentrix — multi-agent routing, Claude tool-calling, BullMQ queues, and an ops dashboard for workflow monitoring.",
+    stack: ["TypeScript", "Node.js", "Redis", "BullMQ", "Claude API"],
     tradeoff:
-      "Invested in queue reliability and dead-letter handling upfront rather than optimizing for lowest-latency single-shot calls.",
+      "Queue reliability and dead-letter handling upfront instead of optimizing for lowest-latency single-shot calls.",
     outcome:
-      "50+ concurrent agents, 200+ workflows in production, 99.9% uptime across orchestration layer.",
+      "Production orchestration layer running concurrent agents with observable workflow execution.",
   },
   {
     id: "orion",
     name: "Orion OS",
     problem:
-      "Business operations ran across disconnected tools — CRM, billing, alerts, and reporting required manual handoffs and constant context switching.",
+      "Business ops ran across disconnected CRM, billing, and reporting tools with manual handoffs.",
     solution:
-      "Built AI-powered business operations infrastructure with unified webhooks, scheduled jobs, Supabase-backed state, and FastAPI services for cross-system automation.",
-    stack: ["React", "FastAPI", "Supabase", "Webhooks", "Cron", "PostgreSQL"],
+      "Unified ops infrastructure with FastAPI services, Supabase state, Stripe billing automation, and webhook-driven integrations.",
+    stack: ["React", "FastAPI", "Supabase", "Stripe", "PostgreSQL"],
     tradeoff:
-      "Favored composable integrations over a monolithic ERP — faster to ship per-client workflows at the cost of more integration surface area.",
+      "Composable integrations per client instead of a monolithic ERP — faster to ship, more surface area to maintain.",
     outcome:
-      "80% of recurring ops automated, 25+ integrations live, daily deploy cadence across the operations stack.",
+      "Recurring ops automated across billing, CRM sync, and scheduled reporting with daily deploys.",
   },
   {
     id: "door",
-    name: "Door Intelligence Platform",
+    name: "Door Intelligence",
     problem:
-      "Construction document extraction was slow, inconsistent, and couldn't scale with high-volume PDF and blueprint uploads.",
+      "Construction teams needed structured data from PDFs and blueprints — manual extraction didn't scale.",
     solution:
-      "Engineered a document intelligence pipeline with OCR preprocessing, LLM structured extraction, S3 storage, and async batch processing with monitoring hooks.",
-    stack: ["Python", "FastAPI", "S3", "Claude", "PostgreSQL", "Celery"],
+      "Document pipeline: S3 ingestion, OCR preprocessing, LLM structured extraction, and Celery batch processing with monitoring.",
+    stack: ["Python", "FastAPI", "S3", "Claude", "Celery", "PostgreSQL"],
     tradeoff:
-      "Batch async processing over real-time sync — optimized throughput and cost at the expense of sub-second individual response times.",
+      "Batch async processing for throughput and cost instead of sub-second per-document response times.",
     outcome:
-      "10K+ documents processed, 97% extraction accuracy, pipeline monitoring with alerting on scoring workflow failures.",
+      "High-volume document extraction with pipeline monitoring and alerting on workflow failures.",
   },
 ];
 
@@ -553,4 +489,14 @@ export const CONTACT_LINKS = {
   linkedin: "https://www.linkedin.com/in/vinayvasamsetty/",
   github: "https://github.com/vasamsettyvinay01-beep",
   schedule: "https://calendly.com/vasamsettyvinay-01/30min",
+};
+
+export const SITE = {
+  name: "Vinay Vasamsetty",
+  role: "AI Product Engineer · Founding Engineer",
+  location: "Houston, TX",
+  companies: "Creoventrix · OrionPath Technologies",
+  headline: "I build AI systems that run in production.",
+  subhead:
+    "Technical founder shipping agent orchestration, recruiting intelligence, document AI, and ops automation — from architecture to deploy.",
 };

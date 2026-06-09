@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useScroll, useSpring } from "framer-motion";
+import { AnimatedBackgroundLayer } from "./AnimatedBackgroundLayer";
 import { ArchitectureExperience } from "./ArchitectureExperience";
 import { BuildLogTerminal } from "./BuildLogTerminal";
 import { AILabExperience } from "./AILabExperience";
@@ -27,8 +28,7 @@ function ScrollProgress() {
 export function ExperienceShell() {
   return (
     <div className="experience-root bg-noise relative min-h-screen">
-      <div className="ambient-top pointer-events-none fixed inset-0 z-0" />
-      <div className="bg-grid pointer-events-none fixed inset-0 z-0 opacity-70" />
+      <AnimatedBackgroundLayer />
       <ScrollProgress />
       <CommandNav />
 

@@ -1,18 +1,23 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { LIVE_OPS_FEED } from "@/lib/data";
+import { SHIPPING_LOG } from "@/lib/data";
 import { useCyclingItems, useLiveFeed } from "@/lib/hooks";
 
+const FEED = SHIPPING_LOG.map((entry) => ({
+  tag: entry.tag,
+  message: entry.message,
+}));
+
 export function LiveOpsFeed({ compact = false }: { compact?: boolean }) {
-  const current = useLiveFeed(LIVE_OPS_FEED, 4000);
-  const stream = useCyclingItems(LIVE_OPS_FEED, compact ? 2 : 3, 3200);
+  const current = useLiveFeed(FEED, 5000);
+  const stream = useCyclingItems(FEED, compact ? 2 : 3, 4000);
 
   if (compact) {
     return (
       <div className="space-y-1 font-mono text-[10px] text-text-secondary">
         {stream.map((item, i) => (
-          <p key={`${item.tag}-${i}`} className="truncate opacity-70">
+          <p key={`${item.tag}-${i}`} className="truncate opacity-80">
             <span className="text-text-secondary/60">[{item.tag}]</span> {item.message}
           </p>
         ))}
@@ -23,11 +28,11 @@ export function LiveOpsFeed({ compact = false }: { compact?: boolean }) {
   return (
     <div className="rounded-lg matte-panel p-4">
       <p className="font-mono text-[10px] tracking-wider text-text-secondary uppercase">
-        Live operations
+        Recent ships
       </p>
       <AnimatePresence mode="wait">
         <motion.p
-          key={current.tag + current.message}
+          key={current.message}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

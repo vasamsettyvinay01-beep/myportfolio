@@ -1,20 +1,22 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { HERO_EDGES, HERO_NODES } from "@/lib/data";
+import { CORE_NODES } from "@/lib/data";
 
-function getNode(id: string) {
-  return HERO_NODES.find((n) => n.id === id)!;
-}
+const MAP_NODES = CORE_NODES.slice(0, 8).map((n, i) => {
+  const angle = (i / 8) * Math.PI * 2 - Math.PI / 2;
+  const r = 38;
+  return {
+    ...n,
+    x: 50 + Math.cos(angle) * r,
+    y: 50 + Math.sin(angle) * r,
+  };
+});
 
 export function SystemMap() {
   return (
     <div className="relative aspect-square w-full max-w-lg lg:max-w-none">
-      <svg
-        viewBox="0 0 100 100"
-        className="h-full w-full"
-        aria-label="Operational systems map"
-      >
+      <svg viewBox="0 0 100 100" className="h-full w-full" aria-label="Production stack map">
         <defs>
           <linearGradient id="edgeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="#4F8CFF" stopOpacity="0.2" />
@@ -30,16 +32,15 @@ export function SystemMap() {
           </filter>
         </defs>
 
-        {HERO_EDGES.map(([from, to], i) => {
-          const a = getNode(from);
-          const b = getNode(to);
+        {MAP_NODES.map((node, i) => {
+          const next = MAP_NODES[(i + 2) % MAP_NODES.length];
           return (
             <motion.line
-              key={`${from}-${to}`}
-              x1={a.x}
-              y1={a.y}
-              x2={b.x}
-              y2={b.y}
+              key={`${node.id}-${next.id}`}
+              x1={node.x}
+              y1={node.y}
+              x2={next.x}
+              y2={next.y}
               stroke="url(#edgeGrad)"
               strokeWidth="0.35"
               initial={{ pathLength: 0, opacity: 0 }}
@@ -70,7 +71,7 @@ export function SystemMap() {
           transition={{ duration: 2, repeat: Infinity }}
         />
 
-        {HERO_NODES.map((node, i) => (
+        {MAP_NODES.map((node, i) => (
           <g key={node.id} transform={`translate(${node.x}, ${node.y})`}>
             <motion.circle
               r="2.8"
@@ -81,38 +82,17 @@ export function SystemMap() {
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.3 + i * 0.1, type: "spring" }}
-              whileHover={{ scale: 1.3 }}
-            />
-            <motion.circle
-              r="4"
-              fill="none"
-              stroke="#4F8CFF"
-              strokeWidth="0.2"
-              strokeOpacity="0.5"
-              animate={{ r: [4, 6, 4], strokeOpacity: [0.5, 0, 0.5] }}
-              transition={{
-                duration: 2.5,
-                repeat: Infinity,
-                delay: i * 0.3,
-              }}
             />
             <text
               y="6.5"
               textAnchor="middle"
               className="fill-[#9CA3AF] font-mono text-[2.8px] uppercase tracking-wide"
             >
-              {node.label}
+              {node.label.split(" ")[0]}
             </text>
           </g>
         ))}
       </svg>
-
-      <div className="pointer-events-none absolute inset-0 rounded-2xl border border-accent-blue/10 bg-accent-blue/[0.02]" />
-      <motion.div
-        className="pointer-events-none absolute top-1/2 left-1/2 h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent-blue/10 blur-3xl"
-        animate={{ opacity: [0.3, 0.6, 0.3], scale: [1, 1.2, 1] }}
-        transition={{ duration: 4, repeat: Infinity }}
-      />
     </div>
   );
 }

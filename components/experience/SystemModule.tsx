@@ -2,8 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronRight, ExternalLink, FileText, GitBranch } from "lucide-react";
-import type { SystemCard } from "@/lib/data";
-import { useCountUp } from "@/lib/hooks";
+import { CASE_STUDY_IDS, type SystemCard } from "@/lib/data";
 import { ExplodedArchitecture } from "./ExplodedArchitecture";
 
 type SystemModuleProps = {
@@ -13,17 +12,14 @@ type SystemModuleProps = {
   onActivate: () => void;
 };
 
-function MetricValue({ value, active }: { value: string; active: boolean }) {
-  const display = useCountUp(value, active);
-  return <>{display}</>;
-}
-
 export function SystemModule({
   system,
   index,
   isActive,
   onActivate,
 }: SystemModuleProps) {
+  const hasCaseStudy = CASE_STUDY_IDS.has(system.id);
+
   return (
     <motion.article
       layout
@@ -79,12 +75,10 @@ export function SystemModule({
             className="overflow-hidden border-t border-border"
           >
             <div className="px-6 pb-7 sm:px-7">
-              <div className="grid grid-cols-3 gap-6 pt-6">
+              <div className="grid grid-cols-1 gap-4 pt-6 sm:grid-cols-3 sm:gap-6">
                 {system.metrics.map((m) => (
                   <div key={m.label}>
-                    <p className="text-lg font-medium tracking-tight text-text-primary glow-text">
-                      <MetricValue value={m.value} active={isActive} />
-                    </p>
+                    <p className="text-sm font-medium text-text-primary">{m.value}</p>
                     <p className="mt-1 text-[11px] text-text-secondary">{m.label}</p>
                   </div>
                 ))}
@@ -115,7 +109,7 @@ export function SystemModule({
                     GitHub
                   </a>
                 )}
-                {system.links.caseStudy && (
+                {hasCaseStudy && system.links.caseStudy && (
                   <a
                     href={system.links.caseStudy}
                     data-magnetic

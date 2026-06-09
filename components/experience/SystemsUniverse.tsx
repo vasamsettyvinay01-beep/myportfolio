@@ -11,16 +11,13 @@ export function SystemsUniverse() {
   return (
     <WorldSection id="systems">
       <div className="section-container">
-        <div className="mb-16 max-w-xl">
-          <p className="font-mono text-[11px] tracking-[0.2em] text-text-secondary uppercase">
-            Systems
-          </p>
-          <h2 className="mt-6 text-3xl font-medium tracking-[-0.02em] text-text-primary sm:text-4xl">
-            Production modules
+        <div className="mb-10 max-w-xl">
+          <h2 className="text-3xl font-medium tracking-[-0.02em] text-text-primary sm:text-4xl">
+            Products
           </h2>
-          <p className="mt-6 text-base leading-relaxed text-text-secondary">
-            Operational platforms in production — select a module to inspect
-            architecture and metrics.
+          <p className="mt-4 text-base leading-relaxed text-text-secondary">
+            Six systems in production or active development — expand any row for
+            stack, pipeline stages, GitHub, and architecture breakdown.
           </p>
         </div>
 

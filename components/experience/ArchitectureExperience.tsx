@@ -1,85 +1,105 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
-import { useState, type CSSProperties } from "react";
+import {
+  Activity,
+  Bot,
+  Cpu,
+  Database,
+  Layout,
+  Radio,
+  Server,
+  type LucideIcon,
+} from "lucide-react";
+import { useState } from "react";
 import { ARCHITECTURE_FLOW } from "@/lib/data";
 import { WorldSection } from "./WorldSection";
 
+const ICONS: Record<string, LucideIcon> = {
+  input: Radio,
+  orchestration: Bot,
+  backend: Server,
+  data: Database,
+  automation: Cpu,
+  ui: Layout,
+  monitoring: Activity,
+};
+
+const SPANS: Record<string, string> = {
+  input: "md:col-span-4",
+  orchestration: "md:col-span-8",
+  backend: "md:col-span-4",
+  data: "md:col-span-4",
+  automation: "md:col-span-4",
+  ui: "md:col-span-6",
+  monitoring: "md:col-span-6",
+};
+
+const EASE = [0.22, 1, 0.36, 1] as const;
+
 export function ArchitectureExperience() {
-  const [activeId, setActiveId] = useState<string | null>(ARCHITECTURE_FLOW[0].id);
-  const active = ARCHITECTURE_FLOW.find((n) => n.id === activeId);
+  const [activeId, setActiveId] = useState<string>(ARCHITECTURE_FLOW[0].id);
+  const active = ARCHITECTURE_FLOW.find((n) => n.id === activeId)!;
 
   return (
     <WorldSection id="architecture" className="border-t border-border">
       <div className="section-container">
-        <div className="mb-16 max-w-xl">
-          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-text-secondary">
-            Build pattern
-          </p>
-          <h2 className="mt-6 text-3xl font-medium tracking-[-0.02em] text-text-primary sm:text-4xl">
-            How I build systems
+        <div className="mb-10 max-w-2xl">
+          <h2 className="text-3xl font-medium tracking-[-0.02em] text-text-primary sm:text-4xl">
+            How I build
           </h2>
-          <p className="mt-6 text-base leading-relaxed text-text-secondary">
-            Every product follows the same operational spine — automation, reliability,
-            workflow clarity, and fast iteration.
+          <p className="mt-4 text-base leading-relaxed text-text-secondary">
+            The same seven layers appear in every production system I ship — from
+            SNIPR and Agentrix to Orion OS and Door Intelligence.
           </p>
         </div>
 
-        <div className="overflow-x-auto pb-2">
-          <div className="flex min-w-max items-center gap-2 sm:gap-3">
-            {ARCHITECTURE_FLOW.map((node, i) => (
-              <div key={node.id} className="flex items-center gap-2 sm:gap-3">
-                <motion.button
-                  type="button"
-                  onMouseEnter={() => setActiveId(node.id)}
-                  onFocus={() => setActiveId(node.id)}
-                  onClick={() => setActiveId(node.id)}
-                  data-magnetic
-                  className={`magnetic-target group flex flex-col items-center rounded-xl border px-4 py-5 transition-all sm:min-w-[118px] sm:px-5 ${
-                    activeId === node.id
-                      ? "matte-panel-glow border-accent/30"
-                      : "matte-panel hover:bg-surface-elevated"
-                  }`}
-                  style={{ "--node-color": node.color } as CSSProperties}
-                >
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-12">
+          {ARCHITECTURE_FLOW.map((node, i) => {
+            const Icon = ICONS[node.id] ?? Server;
+            const isActive = activeId === node.id;
+
+            return (
+              <motion.button
+                key={node.id}
+                type="button"
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.04, ease: EASE }}
+                onClick={() => setActiveId(node.id)}
+                data-magnetic
+                className={`magnetic-target rounded-xl border p-5 text-left transition-colors md:p-6 ${SPANS[node.id]} ${
+                  isActive
+                    ? "border-accent/40 bg-surface-elevated"
+                    : "border-border bg-surface/70 hover:border-accent/20 hover:bg-surface-elevated/80"
+                }`}
+              >
+                <div className="flex items-center gap-3">
                   <div
-                    className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg border font-mono text-xs font-medium"
+                    className="flex h-10 w-10 items-center justify-center rounded-lg border"
                     style={{
                       borderColor: `${node.color}50`,
-                      backgroundColor: `${node.color}18`,
+                      backgroundColor: `${node.color}15`,
                       color: node.color,
                     }}
                   >
-                    {String(i + 1).padStart(2, "0")}
+                    <Icon size={18} strokeWidth={1.5} />
                   </div>
-                  <span className="text-center text-xs font-medium text-text-primary sm:text-sm">
-                    {node.label}
-                  </span>
-                </motion.button>
-                {i < ARCHITECTURE_FLOW.length - 1 && (
-                  <ArrowRight className="shrink-0 text-text-secondary/30" size={16} />
-                )}
-              </div>
-            ))}
-          </div>
+                  <h3 className="text-base font-medium text-text-primary">{node.label}</h3>
+                </div>
+                <p className="mt-4 text-sm leading-relaxed text-text-secondary">
+                  {node.description}
+                </p>
+              </motion.button>
+            );
+          })}
         </div>
 
-        <motion.div
-          key={active?.id ?? "default"}
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35 }}
-          className="mt-8 rounded-xl matte-panel p-6 sm:p-7"
-        >
-          <p className="font-mono text-[11px] uppercase tracking-wider text-accent">
-            {active?.label ?? "Layer"}
-          </p>
-          <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-            {active?.description ??
-              "Hover or tap a layer to see how each part of the stack connects."}
-          </p>
-        </motion.div>
+        <p className="mt-6 text-sm text-text-secondary">
+          <span className="font-medium text-text-primary">{active.label}:</span>{" "}
+          {active.description}
+        </p>
       </div>
     </WorldSection>
   );
