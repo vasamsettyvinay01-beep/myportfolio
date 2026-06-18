@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { Button3D } from "@/components/ui/Button3D";
 import { NAV_LINKS } from "@/lib/data";
 import { useScrollSpy } from "@/lib/hooks";
 
@@ -19,7 +20,7 @@ export function CommandNav() {
         <Link
           href="#core"
           data-magnetic
-          className="magnetic-target font-mono text-[13px] tracking-tight text-text-primary"
+          className="magnetic-target text-xl text-text-primary"
         >
           vinay<span className="text-accent">.systems</span>
         </Link>
@@ -44,13 +45,9 @@ export function CommandNav() {
           })}
         </ul>
 
-        <a
-          href="#contact"
-          data-magnetic
-          className="magnetic-target hidden rounded-md border border-accent/25 bg-accent/5 px-4 py-1.5 text-[13px] text-text-primary transition-colors hover:border-accent/40 hover:bg-accent/10 md:inline-flex"
-        >
+        <Button3D href="#contact" variant="accent" size="sm" className="hidden md:inline-flex">
           Contact
-        </a>
+        </Button3D>
 
         <button
           type="button"

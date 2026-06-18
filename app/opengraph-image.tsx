@@ -5,7 +5,25 @@ export const alt = "Vinay Vasamsetty — AI Operational Systems";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function OpenGraphImage() {
+async function loadGoogleFont(family: string, weight: number) {
+  const css = await fetch(
+    `https://fonts.googleapis.com/css2?family=${family}:wght@${weight}&display=swap`,
+    { headers: { "User-Agent": "Mozilla/5.0 (compatible; OG-Image/1.0)" } }
+  ).then((r) => r.text());
+
+  const url = css.match(/src: url\(([^)]+)\) format\('woff2'\)/)?.[1];
+  if (!url) return null;
+  return fetch(url).then((r) => r.arrayBuffer());
+}
+
+export default async function OpenGraphImage() {
+  const lobsterData = await loadGoogleFont("Lobster", 400);
+
+  const fonts: { name: string; data: ArrayBuffer; weight: 400; style: "normal" }[] = [];
+  if (lobsterData) fonts.push({ name: "Lobster", data: lobsterData, weight: 400, style: "normal" });
+
+  const sans = lobsterData ? "Lobster" : "cursive";
+
   return new ImageResponse(
     (
       <div
@@ -18,7 +36,7 @@ export default function OpenGraphImage() {
           padding: "72px",
           background: "linear-gradient(145deg, #070708 0%, #12121a 50%, #070708 100%)",
           color: "#f3f4f6",
-          fontFamily: "system-ui, sans-serif",
+          fontFamily: sans,
         }}
       >
         <div
@@ -50,28 +68,19 @@ export default function OpenGraphImage() {
               }}
             />
           </div>
-          <span style={{ fontSize: "22px", color: "#a1a1aa", letterSpacing: "0.08em" }}>
-            vinay.systems
-          </span>
+          <span style={{ fontSize: "28px", color: "#a1a1aa" }}>vinay.systems</span>
         </div>
-        <div style={{ fontSize: "64px", fontWeight: 600, lineHeight: 1.1, maxWidth: "900px" }}>
+        <div style={{ fontSize: "72px", fontWeight: 400, lineHeight: 1.1, maxWidth: "900px" }}>
           Vinay Vasamsetty
         </div>
-        <div
-          style={{
-            fontSize: "32px",
-            color: "#6e8bff",
-            marginTop: "20px",
-            fontWeight: 500,
-          }}
-        >
+        <div style={{ fontSize: "40px", color: "#6e8bff", marginTop: "20px" }}>
           AI Operational Systems
         </div>
-        <div style={{ fontSize: "22px", color: "#a1a1aa", marginTop: "28px", maxWidth: "760px" }}>
+        <div style={{ fontSize: "26px", color: "#a1a1aa", marginTop: "28px", maxWidth: "760px" }}>
           Agentic platforms, async backends, and production SaaS — built to ship.
         </div>
       </div>
     ),
-    { ...size }
+    { ...size, fonts: fonts.length ? fonts : undefined }
   );
 }

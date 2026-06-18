@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Calendar, Code2, Mail, Phone, Users } from "lucide-react";
+import { Button3D } from "@/components/ui/Button3D";
 import { CONTACT_LINKS, SITE } from "@/lib/data";
 import { WorldSection } from "./WorldSection";
 
@@ -18,7 +19,7 @@ export function ContactPortal() {
         >
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(110,139,255,0.06)_0%,transparent_65%)]" />
 
-          <h2 className="relative text-3xl font-medium tracking-[-0.02em] sm:text-4xl">
+          <h2 className="relative text-3xl sm:text-4xl">
             Work with me
           </h2>
           <p className="relative mx-auto mt-6 max-w-md text-base text-text-secondary">
@@ -34,17 +35,15 @@ export function ContactPortal() {
               { href: CONTACT_LINKS.github, icon: Code2, label: "GitHub" },
               { href: CONTACT_LINKS.schedule, icon: Calendar, label: "Calendly" },
             ].map(({ href, icon: Icon, label }) => (
-              <a
+              <Button3D
                 key={label}
                 href={href}
-                data-magnetic
-                target={href.startsWith("mailto") || href.startsWith("tel") ? undefined : "_blank"}
-                rel="noopener noreferrer"
-                className="magnetic-target inline-flex items-center gap-2 rounded-md border border-border px-5 py-2.5 text-sm text-text-primary transition-colors hover:border-accent/30 hover:bg-surface-elevated"
+                variant={label === "Calendly" ? "accent" : "secondary"}
+                external={!href.startsWith("mailto") && !href.startsWith("tel")}
               >
                 <Icon size={15} strokeWidth={1.5} />
                 {label}
-              </a>
+              </Button3D>
             ))}
           </div>
         </motion.div>

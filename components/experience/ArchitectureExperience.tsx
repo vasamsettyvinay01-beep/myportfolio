@@ -45,12 +45,12 @@ export function ArchitectureExperience() {
     <WorldSection id="architecture" className="border-t border-border">
       <div className="section-container">
         <div className="mb-10 max-w-2xl">
-          <h2 className="text-3xl font-medium tracking-[-0.02em] text-text-primary sm:text-4xl">
+          <h2 className="text-3xl text-text-primary sm:text-4xl">
             How I build
           </h2>
           <p className="mt-4 text-base leading-relaxed text-text-secondary">
             The same seven layers appear in every production system I ship — from
-            SNIPR and Agentrix to Orion OS and Door Intelligence.
+            SNIPR and CandidateMatch to Agentrix, Orion OS, and D8 Copilot.
           </p>
         </div>
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { parseBuildStoryHash } from "@/lib/buildStory";
 
 export function useLiveFeed<T>(items: readonly T[], intervalMs = 3200) {
   const [index, setIndex] = useState(0);
@@ -108,6 +109,56 @@ export function useCountUp(value: string, active: boolean, duration = 900) {
   }, [value, active, duration, isNumeric]);
 
   return active && isNumeric ? animated : value;
+}
+
+export function useInView<T extends Element>(rootMargin = "0px", threshold = 0) {
+  const ref = useRef<T>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { rootMargin, threshold }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [rootMargin, threshold]);
+
+  return { ref, inView };
+}
+
+export function useBuildStoryChapterFromHash(
+  systems: readonly { id: string }[],
+  setActiveIndex: (index: number) => void
+) {
+  useEffect(() => {
+    const applyHash = (hash?: string, scrollToSection = false) => {
+      const currentHash = hash ?? window.location.hash;
+      const index = systems.findIndex(
+        (s) => s.id === parseBuildStoryHash(currentHash)
+      );
+      if (index < 0) return;
+      setActiveIndex(index);
+      if (scrollToSection && parseBuildStoryHash(currentHash)) {
+        document.getElementById("systems")?.scrollIntoView({ behavior: "auto", block: "start" });
+      }
+    };
+
+    applyHash(undefined, true);
+    const onHashChange = () => applyHash();
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, [systems, setActiveIndex]);
+}
+
+export function syncBuildStoryHash(systemId: string) {
+  const next = `#systems/${systemId}`;
+  if (window.location.hash !== next) {
+    window.history.replaceState(null, "", next);
+  }
 }
 
 export function useVisibilityPause(callback: () => void, deps: unknown[]) {

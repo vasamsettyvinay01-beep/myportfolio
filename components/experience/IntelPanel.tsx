@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { CASE_STUDIES } from "@/lib/data";
 import { WorldSection } from "./WorldSection";
@@ -11,12 +13,12 @@ export function IntelPanel() {
     <WorldSection id="intel" className="border-t border-border">
       <div className="section-container">
         <div className="mb-10 max-w-xl">
-          <h2 className="text-3xl font-medium tracking-[-0.02em] text-text-primary sm:text-4xl">
+          <h2 className="text-3xl text-text-primary sm:text-4xl">
             Case studies
           </h2>
           <p className="mt-4 text-base leading-relaxed text-text-secondary">
-            Problem, solution, tradeoff, and outcome for four production systems
-            — CandidateMatch, Agentrix, Orion OS, and Door Intelligence.
+            Problem, solution, tradeoff, and outcome for five production systems
+            — SNIPR, CandidateMatch, Agentrix, Orion OS, and D8 Copilot.
           </p>
         </div>
 
@@ -75,6 +77,14 @@ export function IntelPanel() {
                   </p>
                 </div>
               </div>
+
+              <Link
+                href={`/case-studies/${study.id}`}
+                className="relative mt-8 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-text-secondary transition-colors hover:text-accent"
+              >
+                Read full case study
+                <ArrowRight size={14} strokeWidth={1.5} />
+              </Link>
             </motion.article>
           ))}
         </div>

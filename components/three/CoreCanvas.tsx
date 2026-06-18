@@ -11,7 +11,8 @@ export default function CoreCanvas({ activeNodeId }: CoreCanvasProps) {
   return (
     <Canvas
       camera={{ position: [0, 1.5, 6.2], fov: 42 }}
-      dpr={[1, 1.5]}
+      dpr={[1, 1]}
+      frameloop="demand"
       className="!h-full !w-full rounded-2xl"
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
     >

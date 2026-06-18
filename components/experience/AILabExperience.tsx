@@ -21,7 +21,7 @@ export function AILabExperience() {
     <WorldSection id="ai-lab" className="border-t border-border bg-surface-lab/50">
       <div className="section-container">
         <div className="mb-10 max-w-xl">
-          <h2 className="text-3xl font-medium tracking-[-0.02em] text-text-primary sm:text-4xl">
+          <h2 className="text-3xl text-text-primary sm:text-4xl">
             Research
           </h2>
           <p className="mt-4 text-base leading-relaxed text-text-secondary">

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion, useScroll } from "framer-motion";
 import { AnimatedBackgroundLayer } from "./AnimatedBackgroundLayer";
 import { ArchitectureExperience } from "./ArchitectureExperience";
 import { BuildLogTerminal } from "./BuildLogTerminal";
@@ -13,15 +13,12 @@ import { SystemsUniverse } from "./SystemsUniverse";
 
 function ScrollProgress() {
   const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 35 });
 
   return (
     <motion.div
-      className="fixed top-0 right-0 left-0 z-[60] h-[2px] origin-left"
-      style={{ scaleX }}
-    >
-      <div className="h-full w-full bg-gradient-to-r from-accent via-accent-violet to-accent" />
-    </motion.div>
+      className="fixed top-0 right-0 left-0 z-[60] h-[2px] origin-left bg-gradient-to-r from-accent via-accent-violet to-accent"
+      style={{ scaleX: scrollYProgress }}
+    />
   );
 }
 

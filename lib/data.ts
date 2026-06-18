@@ -1,6 +1,6 @@
 export const NAV_LINKS = [
   { label: "Stack", href: "#core" },
-  { label: "Products", href: "#systems" },
+  { label: "Build story", href: "#systems" },
   { label: "Architecture", href: "#architecture" },
   { label: "Ship log", href: "#terminal" },
   { label: "Research", href: "#ai-lab" },
@@ -23,7 +23,7 @@ export const CORE_NODES: CoreNode[] = [
     id: "agents",
     label: "AI Agents",
     metric: "Claude tool-calling",
-    activity: "CandidateMatch · Agentrix",
+    activity: "SNIPR · CandidateMatch",
     detail: "Multi-agent workflows with structured tool use, memory, and human review gates.",
     color: "#6E8BFF",
   },
@@ -79,7 +79,7 @@ export const CORE_NODES: CoreNode[] = [
     id: "pipelines",
     label: "Data Pipelines",
     metric: "Celery · batch jobs",
-    activity: "Door Intel · ATS",
+    activity: "D8 Copilot · docs",
     detail: "OCR, extraction, and scoring pipelines for documents and applicant volume.",
     color: "#B8C0CC",
   },
@@ -162,12 +162,19 @@ export type ExplodedLayer = {
 };
 
 export const EXPLODED_LAYERS: Record<string, ExplodedLayer[]> = {
-  candidatematch: [
+  snipr: [
     { id: "ingest", label: "Ingest API", description: "Resume upload + ATS webhook ingestion", x: -120, y: -80, z: 0 },
     { id: "agents", label: "Scoring Agents", description: "Multi-agent fit scoring with RAG context", x: 0, y: -100, z: 20 },
     { id: "vector", label: "Vector Store", description: "pgvector embeddings + hybrid retrieval", x: 120, y: -60, z: 0 },
-    { id: "queue", label: "Job Queue", description: "BullMQ async batch processing", x: -100, y: 60, z: 10 },
+    { id: "queue", label: "Job Queue", description: "Async batch processing for scoring volume", x: -100, y: 60, z: 10 },
     { id: "monitor", label: "Monitoring", description: "Pipeline alerts + eval regression", x: 100, y: 80, z: 0 },
+  ],
+  candidatematch: [
+    { id: "profiles", label: "Candidate Profiles", description: "Normalized applicant + role records", x: -110, y: -70, z: 0 },
+    { id: "matcher", label: "Match Engine", description: "Fit scoring and rank ordering", x: 0, y: -90, z: 15 },
+    { id: "review", label: "Review UI", description: "Recruiter approval before routing", x: 110, y: -60, z: 0 },
+    { id: "ats", label: "ATS Sync", description: "Webhook push to existing pipelines", x: -90, y: 80, z: 10 },
+    { id: "reports", label: "Match Reports", description: "Pipeline latency + match analytics", x: 100, y: 70, z: 0 },
   ],
   agentrix: [
     { id: "router", label: "Agent Router", description: "Multi-agent routing with tool-calling", x: -110, y: -70, z: 15 },
@@ -183,7 +190,7 @@ export const EXPLODED_LAYERS: Record<string, ExplodedLayer[]> = {
     { id: "cron", label: "Cron Workers", description: "Scheduled ops automation", x: -110, y: 50, z: 0 },
     { id: "reports", label: "Reports API", description: "Operational analytics layer", x: 110, y: 60, z: 0 },
   ],
-  door: [
+  d8copilot: [
     { id: "upload", label: "Upload API", description: "PDF/document ingestion to S3", x: -120, y: 0, z: 0 },
     { id: "ocr", label: "OCR Pipeline", description: "Document preprocessing + parsing", x: 0, y: -90, z: 15 },
     { id: "extract", label: "LLM Extractor", description: "Structured field extraction", x: 120, y: 0, z: 0 },
@@ -203,6 +210,13 @@ export const EXPLODED_LAYERS: Record<string, ExplodedLayer[]> = {
   ],
 };
 
+export type SystemStory = {
+  era: string;
+  opener: string;
+  lesson: string;
+  bridge?: string;
+};
+
 export type SystemCard = {
   id: string;
   name: string;
@@ -216,25 +230,63 @@ export type SystemCard = {
     github?: string;
   };
   previewNodes: string[];
+  story: SystemStory;
+};
+
+export const BUILD_STORY_INTRO = {
+  title: "One system at a time",
+  body: "Seven products, one timeline. Use the arrows or swipe the tiles — each chapter is a system that shipped.",
 };
 
 export const SYSTEMS: SystemCard[] = [
   {
-    id: "candidatematch",
-    name: "CandidateMatch (SNIPR)",
-    description: "AI recruiting platform — scores, ranks, and routes candidates from ATS pipelines.",
-    stack: ["Next.js", "Python", "Claude", "PostgreSQL", "RAG"],
+    id: "snipr",
+    name: "SNIPR",
+    description: "AI scoring pipeline — multi-agent fit analysis, pgvector RAG, and ATS webhook ingestion.",
+    stack: ["Python", "Claude", "PostgreSQL", "pgvector", "Redis"],
     metrics: [
       { label: "Core capability", value: "Multi-agent scoring" },
-      { label: "Integration", value: "ATS webhooks" },
       { label: "Retrieval", value: "pgvector RAG" },
+      { label: "Integration", value: "ATS webhooks" },
     ],
     links: {
-      caseStudy: "#intel-candidatematch",
+      caseStudy: "/case-studies/snipr",
       architecture: "#architecture",
       github: "https://github.com/vasamsettyvinay01-beep/SNIPR",
     },
     previewNodes: ["Ingest", "Score", "Rank", "Route"],
+    story: {
+      era: "Chapter 01 · Scoring pipeline",
+      opener:
+        "ATS pipelines were manual and slow — recruiters couldn't score or route candidates at daily volume.",
+      lesson:
+        "Built SNIPR: multi-agent scoring, pgvector RAG, and ATS webhook ingestion in production.",
+      bridge: "Scoring worked — recruiters still needed a dedicated matching product on top of it.",
+    },
+  },
+  {
+    id: "candidatematch",
+    name: "CandidateMatch",
+    description: "Recruiting match platform — ranks candidates to roles and routes approved matches through ATS workflows.",
+    stack: ["Next.js", "Python", "Claude", "PostgreSQL", "REST"],
+    metrics: [
+      { label: "Surface", value: "Match ranking UI" },
+      { label: "Workflow", value: "Recruiter review" },
+      { label: "Integration", value: "ATS routing" },
+    ],
+    links: {
+      caseStudy: "/case-studies/candidatematch",
+      architecture: "#architecture",
+    },
+    previewNodes: ["Profile", "Match", "Review", "Route"],
+    story: {
+      era: "Chapter 02 · Recruiting product",
+      opener:
+        "Backend scoring wasn't enough — recruiters needed match ranking, review, and routing in one workflow.",
+      lesson:
+        "Shipped CandidateMatch: fit ranking, recruiter review gates, and ATS routing on daily recruiting volume.",
+      bridge: "Matching shipped — but every workflow was still a script. I needed a runtime.",
+    },
   },
   {
     id: "agentrix",
@@ -247,11 +299,19 @@ export const SYSTEMS: SystemCard[] = [
       { label: "Tools", value: "Claude API" },
     ],
     links: {
-      caseStudy: "#intel-agentrix",
+      caseStudy: "/case-studies/agentrix",
       architecture: "#architecture",
       github: "https://github.com/vasamsettyvinay01-beep/agentrix-foundation",
     },
     previewNodes: ["Router", "Tools", "Memory", "Monitor"],
+    story: {
+      era: "Chapter 03 · Orchestration",
+      opener:
+        "Agent workflows lived in scattered cron jobs — no router, no queues, no visibility when something failed.",
+      lesson:
+        "Built Agentrix: Claude tool-calling, BullMQ workers, dead-letter queues, and an ops dashboard.",
+      bridge: "Agents could run — but client ops still needed billing, CRM, and scheduled automation.",
+    },
   },
   {
     id: "orion",
@@ -264,16 +324,24 @@ export const SYSTEMS: SystemCard[] = [
       { label: "Backend", value: "FastAPI + Supabase" },
     ],
     links: {
-      caseStudy: "#intel-orion",
+      caseStudy: "/case-studies/orion",
       architecture: "#architecture",
       github: "https://github.com/vasamsettyvinay01-beep/orion-path-website",
     },
     previewNodes: ["CRM", "Billing", "Alerts", "Reports"],
+    story: {
+      era: "Chapter 04 · Business ops",
+      opener:
+        "CRM, billing, and reporting ran in disconnected tools with manual handoffs between teams.",
+      lesson:
+        "Orion OS unified FastAPI services, Supabase state, Stripe billing, and webhook-driven integrations.",
+      bridge: "Ops were automated — then teams needed an AI copilot for documents at scale.",
+    },
   },
   {
-    id: "door",
-    name: "Door Intelligence",
-    description: "Construction document AI — OCR, LLM extraction, and batch export from PDF uploads.",
+    id: "d8copilot",
+    name: "D8 Copilot",
+    description: "AI document copilot — OCR, LLM extraction, and batch export from PDF and blueprint uploads.",
     stack: ["Python", "OCR", "LLM", "S3", "Celery"],
     metrics: [
       { label: "Input", value: "PDF / blueprint" },
@@ -281,11 +349,19 @@ export const SYSTEMS: SystemCard[] = [
       { label: "Output", value: "Structured JSON" },
     ],
     links: {
-      caseStudy: "#intel-door",
+      caseStudy: "/case-studies/d8copilot",
       architecture: "#architecture",
       github: "https://github.com/vasamsettyvinay01-beep",
     },
     previewNodes: ["Upload", "Parse", "Extract", "Export"],
+    story: {
+      era: "Chapter 05 · D8 Copilot",
+      opener:
+        "Blueprints and PDFs needed structured fields — manual extraction couldn't keep up with upload volume.",
+      lesson:
+        "D8 Copilot: S3 ingestion, OCR, LLM extraction, Celery batches, and pipeline monitoring.",
+      bridge: "Document pipelines shipped — merchants still needed billing and POS in one surface.",
+    },
   },
   {
     id: "billb",
@@ -302,6 +378,14 @@ export const SYSTEMS: SystemCard[] = [
       github: "https://github.com/vasamsettyvinay01-beep",
     },
     previewNodes: ["POS", "Invoices", "Payments", "Ledger"],
+    story: {
+      era: "Chapter 06 · Merchant billing",
+      opener:
+        "Small merchants needed Stripe, invoices, and a ledger — not three separate tools.",
+      lesson:
+        "BillB POS: Prisma ledger, Stripe Connect, and a merchant-facing POS workflow in Next.js.",
+      bridge: "SaaS surfaces were covered — job seekers still fought the same forms in every browser tab.",
+    },
   },
   {
     id: "chrome",
@@ -318,6 +402,14 @@ export const SYSTEMS: SystemCard[] = [
       github: "https://github.com/vasamsettyvinay01-beep",
     },
     previewNodes: ["Detect", "Fill", "Track", "Sync"],
+    story: {
+      era: "Chapter 07 · Browser layer",
+      opener:
+        "Applying to roles meant retyping the same fields and losing track of where each application stood.",
+      lesson:
+        "Chrome MV3 extensions with role-based autofill, application tracking, and persistent storage.",
+      bridge: "Seven systems, one stack — each chapter built on what the last one taught me.",
+    },
   },
 ];
 
@@ -377,7 +469,7 @@ export const RESEARCH_ITEMS = [
     id: "memory",
     name: "Long-horizon Agent Memory",
     status: "building" as const,
-    description: "Cross-session context with vector retrieval — extending what CandidateMatch already does.",
+    description: "Cross-session context with vector retrieval — extending what SNIPR and CandidateMatch already do.",
   },
   {
     id: "eval",
@@ -414,37 +506,89 @@ export const RESEARCH_ITEMS = [
 export type CaseStudy = {
   id: string;
   name: string;
+  tagline: string;
   problem: string;
   solution: string;
   stack: string[];
   tradeoff: string;
   outcome: string;
+  retrospective: string;
+  highlights: { title: string; body: string }[];
 };
 
 export const CASE_STUDY_IDS = new Set([
+  "snipr",
   "candidatematch",
   "agentrix",
   "orion",
-  "door",
+  "d8copilot",
 ]);
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
-    id: "candidatematch",
-    name: "CandidateMatch",
+    id: "snipr",
+    name: "SNIPR",
+    tagline: "Multi-agent scoring pipeline with RAG-backed context for high-volume ATS ingestion.",
     problem:
-      "Recruiting teams couldn't score, rank, or route candidates at scale — ATS pipelines were manual and slow.",
+      "Recruiting teams couldn't score or route applicants at daily volume — ATS pipelines were manual and slow.",
     solution:
-      "Built SNIPR/CandidateMatch with multi-agent scoring, RAG-backed candidate context, and automated routing integrated into existing ATS workflows.",
-    stack: ["Next.js", "Python", "Claude", "PostgreSQL", "pgvector", "Redis"],
+      "Built SNIPR with multi-agent fit scoring, pgvector RAG, and ATS webhook ingestion for production recruiting volume.",
+    stack: ["Python", "Claude", "PostgreSQL", "pgvector", "Redis"],
     tradeoff:
       "Accuracy-first scoring with human review gates instead of fully autonomous hiring — compliance and trust over raw speed.",
     outcome:
-      "63% reduction in ATS processing latency and multi-agent scoring in production on daily recruiting volume.",
+      "Production scoring pipeline handling daily ATS volume with RAG-backed agent reasoning and webhook routing.",
+    retrospective:
+      "I'd instrument eval sets earlier — production drift was harder to catch before we had regression suites on scoring outputs.",
+    highlights: [
+      {
+        title: "RAG-backed scoring",
+        body: "pgvector retrieval grounds each score in resume and job context with citation-backed reasoning.",
+      },
+      {
+        title: "ATS webhook ingest",
+        body: "Incoming applicant events trigger async scoring without replacing the ATS.",
+      },
+      {
+        title: "Multi-agent pipeline",
+        body: "Specialized agents handle ingest, scoring, ranking, and route decisions with review checkpoints.",
+      },
+    ],
+  },
+  {
+    id: "candidatematch",
+    name: "CandidateMatch",
+    tagline: "Recruiter-facing match platform — rank, review, and route candidates to open roles.",
+    problem:
+      "Scoring pipelines existed, but recruiters still lacked a product workflow for match ranking and approved routing.",
+    solution:
+      "Built CandidateMatch as a dedicated matching surface: fit ranking, recruiter review gates, and ATS routing on top of production scoring.",
+    stack: ["Next.js", "Python", "Claude", "PostgreSQL", "REST"],
+    tradeoff:
+      "Recruiter-in-the-loop review on every high-stakes match instead of fully automated routing — trust over throughput.",
+    outcome:
+      "63% reduction in ATS processing latency with match ranking and routing in daily recruiting workflows.",
+    retrospective:
+      "I'd separate product analytics from pipeline metrics sooner — recruiters and engineers cared about different signals.",
+    highlights: [
+      {
+        title: "Match ranking",
+        body: "Candidates ordered by fit score with role context visible before recruiters approve routing.",
+      },
+      {
+        title: "Review workflow",
+        body: "High-stakes matches pause for recruiter approval before ATS updates fire.",
+      },
+      {
+        title: "ATS routing",
+        body: "Approved matches push back into existing ATS pipelines without manual copy-paste.",
+      },
+    ],
   },
   {
     id: "agentrix",
     name: "Agentrix",
+    tagline: "The orchestration runtime for multi-agent ops workflows.",
     problem:
       "AI workflows lived in scattered scripts and cron jobs with no unified orchestration or visibility.",
     solution:
@@ -454,10 +598,27 @@ export const CASE_STUDIES: CaseStudy[] = [
       "Queue reliability and dead-letter handling upfront instead of optimizing for lowest-latency single-shot calls.",
     outcome:
       "Production orchestration layer running concurrent agents with observable workflow execution.",
+    retrospective:
+      "I'd ship the DAG execution model sooner — linear queues worked but graph-based routing unlocked cleaner retries.",
+    highlights: [
+      {
+        title: "Tool-calling router",
+        body: "Claude agents pick tools from a typed registry with structured outputs and failure boundaries.",
+      },
+      {
+        title: "BullMQ workers",
+        body: "Redis-backed queues with retries, dead-letter handling, and worker health monitoring.",
+      },
+      {
+        title: "Ops dashboard",
+        body: "Live workflow state so operators see stuck jobs before users report them.",
+      },
+    ],
   },
   {
     id: "orion",
     name: "Orion OS",
+    tagline: "Composable business ops — CRM, billing, webhooks, and cron in one stack.",
     problem:
       "Business ops ran across disconnected CRM, billing, and reporting tools with manual handoffs.",
     solution:
@@ -467,21 +628,62 @@ export const CASE_STUDIES: CaseStudy[] = [
       "Composable integrations per client instead of a monolithic ERP — faster to ship, more surface area to maintain.",
     outcome:
       "Recurring ops automated across billing, CRM sync, and scheduled reporting with daily deploys.",
+    retrospective:
+      "I'd standardize webhook schemas across clients on day one — ad-hoc payloads slowed integration testing.",
+    highlights: [
+      {
+        title: "Stripe automation",
+        body: "Billing events trigger downstream CRM updates and invoice generation without manual reconciliation.",
+      },
+      {
+        title: "Webhook hub",
+        body: "Central ingress for third-party events with idempotency keys and replay-safe handlers.",
+      },
+      {
+        title: "Scheduled workers",
+        body: "Cron jobs for reporting, sync, and alert checks replace daily manual ops routines.",
+      },
+    ],
   },
   {
-    id: "door",
-    name: "Door Intelligence",
+    id: "d8copilot",
+    name: "D8 Copilot",
+    tagline: "Document AI pipeline — from PDF upload to structured JSON at batch scale.",
     problem:
-      "Construction teams needed structured data from PDFs and blueprints — manual extraction didn't scale.",
+      "Teams needed structured data from PDFs and blueprints — manual extraction didn't scale.",
     solution:
-      "Document pipeline: S3 ingestion, OCR preprocessing, LLM structured extraction, and Celery batch processing with monitoring.",
+      "D8 Copilot document pipeline: S3 ingestion, OCR preprocessing, LLM structured extraction, and Celery batch processing with monitoring.",
     stack: ["Python", "FastAPI", "S3", "Claude", "Celery", "PostgreSQL"],
     tradeoff:
       "Batch async processing for throughput and cost instead of sub-second per-document response times.",
     outcome:
       "High-volume document extraction with pipeline monitoring and alerting on workflow failures.",
+    retrospective:
+      "I'd add per-field confidence scores earlier — downstream consumers needed trust signals on extracted values.",
+    highlights: [
+      {
+        title: "S3 ingestion",
+        body: "Upload API stores originals and triggers async processing without blocking the client.",
+      },
+      {
+        title: "OCR + LLM extract",
+        body: "Preprocessing normalizes layouts before structured field extraction with schema validation.",
+      },
+      {
+        title: "Pipeline monitoring",
+        body: "Celery task health, failure alerts, and batch progress for ops teams running daily volume.",
+      },
+    ],
   },
 ];
+
+export function getCaseStudyById(id: string): CaseStudy | undefined {
+  return CASE_STUDIES.find((study) => study.id === id);
+}
+
+export function getSystemById(id: string): SystemCard | undefined {
+  return SYSTEMS.find((system) => system.id === id);
+}
 
 export const CONTACT_LINKS = {
   email: "mailto:vasamsettyvinay.01@gmail.com",

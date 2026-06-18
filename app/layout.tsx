@@ -1,25 +1,30 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { JetBrains_Mono } from "next/font/google";
+import { DM_Sans, Handjet, Lobster } from "next/font/google";
 import { JsonLd } from "@/components/JsonLd";
 import { CursorRoot } from "@/components/experience/CursorRoot";
 import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const lobster = Lobster({
+  variable: "--font-lobster",
   subsets: ["latin"],
+  weight: "400",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const dmSans = DM_Sans({
+  variable: "--font-body",
   subsets: ["latin"],
+  weight: ["400", "500"],
+  display: "swap",
 });
 
-const jetbrains = JetBrains_Mono({
-  variable: "--font-jetbrains",
+const handjet = Handjet({
+  variable: "--font-handjet",
   subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -62,7 +67,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${jetbrains.variable} scroll-smooth`}
+      className={`${lobster.variable} ${dmSans.variable} ${handjet.variable} scroll-smooth`}
     >
       <body className="min-h-screen overflow-x-hidden bg-bg font-sans text-text-primary antialiased">
         <JsonLd />

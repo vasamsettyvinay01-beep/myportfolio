@@ -23,12 +23,12 @@ export function BuildLogTerminal() {
     <WorldSection id="terminal" className="border-t border-border">
       <div className="section-container">
         <div className="mb-10 max-w-xl">
-          <h2 className="text-3xl font-medium tracking-[-0.02em] text-text-primary sm:text-4xl">
+          <h2 className="text-3xl text-text-primary sm:text-4xl">
             Ship log
           </h2>
           <p className="mt-4 text-base leading-relaxed text-text-secondary">
             Dated record of production deploys, fixes, and infrastructure changes
-            across Agentrix, CandidateMatch, Orion OS, and related systems.
+            across SNIPR, CandidateMatch, Agentrix, Orion OS, and related systems.
           </p>
         </div>
 
