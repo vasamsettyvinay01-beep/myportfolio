@@ -687,7 +687,7 @@ export function getSystemById(id: string): SystemCard | undefined {
 
 export const CONTACT_LINKS = {
   email: "mailto:vasamsettyvinay.01@gmail.com",
-  phone: "tel:+15185367630",
+  phone: "tel:+15185967630",
   linkedin: "https://www.linkedin.com/in/vinayvasamsetty/",
   github: "https://github.com/vasamsettyvinay01-beep",
   schedule: "https://calendly.com/vasamsettyvinay-01/30min",
